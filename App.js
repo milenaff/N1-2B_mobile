@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import Home from './Telas/Home/index';
+import Categoria from './Telas/Categoria/index';
+import Produto from './Telas/Produto/index';
+import estilos from  './styles'
+
+const Routes = createAppContainer(
+  createSwitchNavigator({
+    Home,
+    Categoria,
+    Produto,
+  })
+);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Routes/>      
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
