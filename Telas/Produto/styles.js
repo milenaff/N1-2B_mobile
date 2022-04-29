@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginBottom: 50,
   },
+  scrollView: {
+  
+    marginHorizontal: 0,
+    width: '100%',
+    height: '100%',
+  },
   botao: {
     width: 120,
     height: 60,
