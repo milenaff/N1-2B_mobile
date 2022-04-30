@@ -7,17 +7,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#87CEFA',
   }, 
+  cadastro: {
+    flexDirection: 'row',
+  },
   titulo: {
     fontSize: 30,
     marginBottom: 50,
   },
   botao: {
     width: 120,
-    height: 60,
+    height: 50,
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    margin:10,
     borderRadius: 5,
   },
   textoBotao: {

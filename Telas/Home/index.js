@@ -1,14 +1,24 @@
-import { react } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { ReactComponentElement, useState } from 'react';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+
 
 export default function Home({ navigation }) {
-    return (
+
+  function removerElemento(){
+
+  }
+
+  function editar(){
+
+  }
+
+  return (
+
         <View style={styles.container}>
 
             <View style={styles.titulo}>
-                <Text>Sistema de Logística</Text>            
+                <Text>Sistema de Logística</Text>
             </View>
 
 
@@ -22,7 +32,11 @@ export default function Home({ navigation }) {
                 <Text style={styles.textoBotao}>+ Produto</Text>
             </TouchableOpacity>
 
+
+
         </View>
+
+
 
     );
 
