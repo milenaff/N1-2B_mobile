@@ -36,11 +36,11 @@ export default function Categoria({ navigation }) {
 
     //Salvando Categoria
     await api
-            .post('/categoria/',categoria)
-            .then(() => Alert.alert('Categoria Salva com sucesso!'))
-            .catch( error => console.log(error));
+      .post('/categoria/', categoria)
+      .then(() => Alert.alert('Categoria Salva com sucesso!'))
+      .catch(error => console.log(error));
 
-    
+
   }
 
   return (

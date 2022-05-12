@@ -6,6 +6,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
+import api from '../../services/api';
+
 
 export default function Produto({ navigation }) {
     const [isChecked, setChecked] = useState(false);
@@ -20,6 +22,11 @@ export default function Produto({ navigation }) {
     const [estoqueMin, setEstoqueMin] = useState();
     const [id, setId] = useState();
     const [produtos, setProdutos] = useState([]);
+    const [carregaLista, setCarregaLista] = useState(false);
+
+    useEffect(()=>{
+        getAllCategorias();
+    },[carregaLista])
 
     function limpaCampos() {
 
@@ -36,13 +43,21 @@ export default function Produto({ navigation }) {
         if (!validaCampos()) {
             return;
         }
-        console.log("Salvou")
-        console.log(codigo);
-        console.log(descricao);
-        console.log(categoria);
-        console.log(estoque);
-        console.log(estoqueMin);
-        console.log(isChecked);
+
+        let produto = {
+            codigo,
+            descricao,
+            categoria,
+            quantidadeEstoque: estoque,
+            estoqueMinimo: estoqueMin,
+            ativo: isChecked,
+        }
+
+        //Salvando Categoria
+        await api
+            .post('/produto/', produto)
+            .then(() => Alert.alert('Produto Salva com sucesso!'))
+            .catch(error => console.log(error));   
     }
 
     function validaCampos() {
@@ -73,17 +88,11 @@ export default function Produto({ navigation }) {
         return true;
     }
 
-    // async function carregaCategorias() {
-    //     try {
-    //       console.log('tentar pegar os tipos')
-    //       let categorias = await obtemTodosTipoAtividade();
-    //       console.log('Categorias');
-    //       console.log(categorias);
-    //       setListaCategorias(categorias);
-    //     } catch (e) {
-    //       Alert.alert(e.toString());
-    //     }
-    //   }
+    async function getAllCategorias() {
+        let resposta = api.get('/produto/');
+        setProdutos(resposta.data);
+        setCarregaLista(!carregaLista);
+    }
 
     return (
 
