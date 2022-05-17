@@ -7,6 +7,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
 import api from '../../services/api';
+import ProdutoList from '../../produto';
 
 
 export default function Produto({ navigation }) {
@@ -22,6 +23,7 @@ export default function Produto({ navigation }) {
     const [id, setId] = useState();
     const [produtos, setProdutos] = useState([]);
     const [carregaLista, setCarregaLista] = useState(false);
+    const [temAbaixoEstoque, setTemAbaixoEstoque] = useState(false);
 
     useEffect(() => {
         getCategorias();
@@ -63,11 +65,11 @@ export default function Produto({ navigation }) {
                 .then(() => Alert.alert('Produto salvo com sucesso!'))
                 .catch(error => console.log(error));
 
-        }else{
+        } else {
             // Alterando Produto
             await api
-                .put('/produto/' + identificador,produto)
-                .then(() => {Alert.alert('Produto alterado com sucesso!')})
+                .put('/produto/' + identificador, produto)
+                .then(() => { Alert.alert('Produto alterado com sucesso!') })
                 .catch(error => console.log(error))
         }
 
@@ -105,8 +107,19 @@ export default function Produto({ navigation }) {
         return true;
     }
 
+    function verificaEstoqueBaixo(array) {
+        let estoqueBaixo = array.filter(produto => produto.quantidadeEstoque <= produto.estoqueMinimo);
+        if (estoqueBaixo.length > 0) {
+            setTemAbaixoEstoque(true);
+        } else {
+            setTemAbaixoEstoque(false);
+        }
+
+    }
+
     async function getAllProdutos() {
         let resposta = await api.get('/produto/');
+        verificaEstoqueBaixo(resposta.data);
         setProdutos(resposta.data);
     }
 
@@ -150,15 +163,27 @@ export default function Produto({ navigation }) {
             setChecked(produto.ativo);
 
         }
+    }
 
+    async function ativos() {
+        let resposta = await api.get('/produto/');
+        setProdutos(resposta.data.filter(produto => produto.ativo == true));
+    }
 
+    async function inativos() {
+        let resposta = await api.get('/produto/');
+        setProdutos(resposta.data.filter(produto => produto.ativo == false));
+    }
+
+    async function estoqueBaixo() {
+        let resposta = await api.get('/produto/');
+        setProdutos(resposta.data.filter(produto => produto.quantidadeEstoque <= produto.estoqueMinimo));
     }
 
     return (
 
         <SafeAreaView style={styles.container} >
             <View style={styles.container}>
-
                 <View style={styles.cadastro}>
                     <View style={styles.inputCodigo}>
                         <Text>Código</Text>
@@ -174,6 +199,15 @@ export default function Produto({ navigation }) {
                             onChangeText={(texto) => setDescricao(texto)}
                             value={descricao}
                         />
+                    </View>
+                    <View>
+                        {
+                            temAbaixoEstoque &&
+                            <TouchableOpacity onPress={() => { estoqueBaixo() }}>
+                                <EvilIcons name="bell" size={24} color="black" />
+                            </TouchableOpacity>
+                        }
+
                     </View>
                 </View>
                 <Text>Categoria</Text>
@@ -227,31 +261,34 @@ export default function Produto({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
+                <View style={styles.filtros}>
+                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { ativos() }}>
+                        <Text style={styles.textoFiltro}>Ativos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { inativos() }}>
+                        <Text style={styles.textoFiltro}>Inativos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { getAllProdutos() }}>
+                        <Text style={styles.textoFiltro}>Todos</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.filtros}>
+                    <TouchableOpacity style={styles.filtroBotaoQtde} onPress={() => { estoqueBaixo() }}>
+                        <Text style={styles.textoFiltro}>Quantidade Baixa</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView style={styles.scrollView}>
+                    {
+                        produtos.map((produto, index) => (
+                            <ProdutoList produto={produto} remover={removerElemento} editar={editar}></ProdutoList>
+                        ))
+                    }
+                </ScrollView>
+
             </View>
 
-            <ScrollView style={styles.scrollView}>
-                {
-                    produtos.map((produto, index) => (
-                        <View style={styles.contato} key={index.toString()}>
-                            <Text style={styles.listaCodigo}>{produto.codigo}</Text>
-                            <Text style={styles.listaDescricao}>{produto.descricao}</Text>
-                            <Text style={styles.listaEstoque}>{produto.estoque}</Text>
 
-                            <View style={styles.dadosBotoesAcao}>
-                                <TouchableOpacity onPress={() => removerElemento(produto._id)}>
-                                    <EvilIcons name="trash" size={24} color="black" />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => editar(produto._id)}>
-                                    <Entypo name="edit" size={32} color="black" />
-                                </TouchableOpacity>
-
-                            </View>
-                        </View>
-
-                    ))
-                }
-            </ScrollView>
             <StatusBar style="auto" />
         </SafeAreaView >
 

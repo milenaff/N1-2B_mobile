@@ -1,6 +1,6 @@
 import { StyleSheet, StatusBar } from 'react-native';
 
-const styles = StyleSheet.create({
+const styles =  StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -23,10 +23,9 @@ const styles = StyleSheet.create({
     width: '45%',
     margin: 10,
   },
-  scrollView: {
-
+  scrollView: {    
     backgroundColor: '#F9F5F5',
-    height: '20%',
+    height:'0%',
   },
   botao: {
     width: 120,
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   contato: {
-    backgroundColor: '#20B2B2',
+    backgroundColor: '#F33232',
     flexDirection: 'row',
     height: 50,
     alignItems: 'center',
@@ -96,6 +95,38 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
 },
+produtoAtivo: {
+  backgroundColor: '#9EF116',
+  flexDirection: 'row',
+  height: 50,
+  alignItems: 'center',
+  margin: 5,
+  borderRadius: 5,
+  shadowColor: "#000",
+  shadowOffset: {
+      width: 0,
+      height: 1,
+  },
+  shadowOpacity: 0.22,
+  shadowRadius: 2.22,
+  elevation: 3,
+},
+produtoInativo: {
+  backgroundColor: '#C4BBBB',
+  flexDirection: 'row',
+  height: 50,
+  alignItems: 'center',
+  margin: 5,
+  borderRadius: 5,
+  shadowColor: "#000",
+  shadowOffset: {
+      width: 0,
+      height: 1,
+  },
+  shadowOpacity: 0.22,
+  shadowRadius: 2.22,
+  elevation: 3,
+},
 listaDescricao: {
   width: '40%',
   fontSize: 18,
@@ -106,7 +137,36 @@ listaEstoque: {
   width: '35%',
   color: "#FFF",
   fontSize: 18,
+},
+filtros:{ 
+  width: '100%',
+  flexDirection: 'row',
+  borderRadius: 5,
+  borderColor: 'red',
+  borderStyle: 'solid'
+},
+filtroBotao:{
+  width: 80,
+  height: 40,
+  backgroundColor: '#9EC6E6',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 10,
+  borderRadius: 5,
+},
+filtroBotaoQtde:{
+  width: '70%',
+  height: 40,
+  backgroundColor: '#9EC6E6',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 10,
+  borderRadius: 5,
+},
+textoFiltro:{
+  color: '#000',
 }
+
 });
 
 export default styles;
