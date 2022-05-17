@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
 
-    backgroundColor: 'red',
+    backgroundColor: '#F9F5F5',
     height: '20%',
   },
   botao: {
@@ -80,6 +80,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
+  contato: {
+    backgroundColor: '#20B2B2',
+    flexDirection: 'row',
+    height: 50,
+    alignItems: 'center',
+    margin: 5,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+},
+listaDescricao: {
+  width: '40%',
+  fontSize: 18,
+  paddingRight: 10,
+  marginLeft:10,
+},
+listaEstoque: {
+  width: '35%',
+  color: "#FFF",
+  fontSize: 18,
+}
 });
 
 export default styles;

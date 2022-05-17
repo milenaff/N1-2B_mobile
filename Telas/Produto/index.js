@@ -13,7 +13,6 @@ export default function Produto({ navigation }) {
     const [isChecked, setChecked] = useState(false);
 
     const [listaCategorias, setListaCategorias] = useState([]);
-    const [listaCategorias2, setListaCategorias2] = useState(["Comida", "Bebida"]);
     const [categoria, setCategoria] = useState();
     const dropdownCategoriasRef = useRef({});
     const [codigo, setCodigo] = useState();
@@ -24,9 +23,10 @@ export default function Produto({ navigation }) {
     const [produtos, setProdutos] = useState([]);
     const [carregaLista, setCarregaLista] = useState(false);
 
-    useEffect(()=>{
-        getAllCategorias();
-    },[carregaLista])
+    useEffect(() => {
+        getCategorias();
+        getAllProdutos();
+    }, [carregaLista])
 
     function limpaCampos() {
 
@@ -34,12 +34,13 @@ export default function Produto({ navigation }) {
         setDescricao("");
         setEstoque("");
         setEstoqueMin("");
+        setChecked(false);
         dropdownCategoriasRef.current.reset();
         setId(undefined);
         Keyboard.dismiss();
     }
 
-    function salvar() {
+    async function salvar() {
         if (!validaCampos()) {
             return;
         }
@@ -53,11 +54,27 @@ export default function Produto({ navigation }) {
             ativo: isChecked,
         }
 
-        //Salvando Categoria
-        await api
-            .post('/produto/', produto)
-            .then(() => Alert.alert('Produto Salva com sucesso!'))
-            .catch(error => console.log(error));   
+        let identificador = id;
+
+        if (identificador == undefined) {
+            //Salvando produto
+            await api
+                .post('/produto/', produto)
+                .then(() => Alert.alert('Produto salvo com sucesso!'))
+                .catch(error => console.log(error));
+
+        }else{
+            // Alterando Produto
+            await api
+                .put('/produto/' + identificador,produto)
+                .then(() => {Alert.alert('Produto alterado com sucesso!')})
+                .catch(error => console.log(error))
+        }
+
+
+
+        setCarregaLista(!carregaLista);
+        limpaCampos();
     }
 
     function validaCampos() {
@@ -88,10 +105,53 @@ export default function Produto({ navigation }) {
         return true;
     }
 
-    async function getAllCategorias() {
-        let resposta = api.get('/produto/');
+    async function getAllProdutos() {
+        let resposta = await api.get('/produto/');
         setProdutos(resposta.data);
+    }
+
+    async function getCategorias() {
+        let resposta = await api.get('/categoria/');
+        setListaCategorias(resposta.data);
+    }
+
+    async function deletaProduto(identificador) {
+        await api.delete('/produto/' + identificador)
+            .then(() => { Alert.alert("Produto excluído com sucesso!") })
+            .catch(() => { Alert.alert("Erro durante a exclusão do produto") })
+
         setCarregaLista(!carregaLista);
+    }
+
+    function removerElemento(identificador) {
+        Alert.alert('Atenção', 'Confirma a remoção do produto?',
+            [
+                {
+                    text: 'Sim',
+                    onPress: () => deletaProduto(identificador),
+                },
+                {
+                    text: 'Não',
+                    style: 'cancel',
+                }
+            ]);
+    }
+
+    function editar(identificador) {
+        const produto = produtos.find(produto => produto._id == identificador);
+
+        if (produto != undefined) {
+            setId(produto._id);
+            setDescricao(produto.descricao);
+            //setCategoria(produto.categoria);
+            setCodigo(produto.codigo.toString());
+            setEstoque(produto.quantidadeEstoque.toString());
+            setEstoqueMin(produto.estoqueMinimo.toString());
+            setChecked(produto.ativo);
+
+        }
+
+
     }
 
     return (
@@ -118,21 +178,16 @@ export default function Produto({ navigation }) {
                 </View>
                 <Text>Categoria</Text>
                 <SelectDropdown
-                    data={listaCategorias2}
+                    data={listaCategorias}
                     ref={dropdownCategoriasRef}
                     onSelect={(selectedItem, index) => {
-                        setCategoria(selectedItem);
-                        // setCategoria(selectedItem.id);
-                        console.log(selectedItem, index);
+                        setCategoria(selectedItem._id);
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
-                        return selectedItem
-                        // return selectedItem.descricao
+                        return selectedItem.descricao
                     }}
                     rowTextForSelection={(item, index) => {
-
-                        return item
-                        //return item.descricao
+                        return item.descricao
                     }}
                 />
 
@@ -183,12 +238,12 @@ export default function Produto({ navigation }) {
                             <Text style={styles.listaEstoque}>{produto.estoque}</Text>
 
                             <View style={styles.dadosBotoesAcao}>
-                                <TouchableOpacity onPress={() => removerElemento()}>
+                                <TouchableOpacity onPress={() => removerElemento(produto._id)}>
                                     <EvilIcons name="trash" size={24} color="black" />
                                 </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => editar()}>
-                                    <Entypo name="edit" size={32} color="#black" />
+                                <TouchableOpacity onPress={() => editar(produto._id)}>
+                                    <Entypo name="edit" size={32} color="black" />
                                 </TouchableOpacity>
 
                             </View>
