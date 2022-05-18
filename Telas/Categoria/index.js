@@ -1,5 +1,5 @@
 import { react } from 'react';
-import { Text, View, TextInput, ScrollView,TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { Text, View, TextInput, ScrollView, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import styles from './styles';
 import React, { useState, useEffect, useRef } from 'react';
 import { Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
@@ -116,62 +116,63 @@ export default function Categoria({ navigation }) {
   }
 
   return (
-    
-  
+
+
     <View style={styles.container}>
-  
+      <View style={styles.input}>
+        <View style={styles.inputNome}>
+          <Text>Código</Text>
+          <TextInput style={styles.caixaTexto} keyboardType='numeric'
+            onChangeText={(texto) => setCodigo(texto)}
+            value={codigo}
+          />
+        </View>
 
-      <View style={styles.inputNome}>
-        <Text>Código</Text>
-        <TextInput style={styles.caixaTexto} keyboardType='numeric'
-          onChangeText={(texto) => setCodigo(texto)}
-          value={codigo}
-        />
+        <View style={styles.inputNome}>
+          <Text>Descrição</Text>
+          <TextInput style={styles.caixaTexto}
+            onChangeText={(texto) => setDescricao(texto)}
+            value={descricao}
+          />
+        </View>
+
+        <View style={styles.cadastro}>
+          <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.textoBotao}>Voltar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botao} onPress={() => salvar()}>
+            <Text style={styles.textoBotao}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <View style={styles.inputNome}>
-        <Text>Descrição</Text>
-        <TextInput style={styles.caixaTexto}
-          onChangeText={(texto) => setDescricao(texto)}
-          value={descricao}
-        />
-      </View>
 
-      <View style={styles.cadastro}>
-        <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.textoBotao}>Voltar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.botao} onPress={() => salvar()}>
-          <Text style={styles.textoBotao}>Salvar</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.infos} >
+        <ScrollView style={styles.scrollView}>
+          {
+            categorias.map((categoria, index) => (
+              <View style={styles.contato} key={index.toString()}>
+                <Text style={styles.listaCodigo}>{categoria.codigo}</Text>
+                <Text style={styles.listaDescricao}>{categoria.descricao}</Text>
 
-      <ScrollView style={styles.scrollView}>
-        {
-          categorias.map((categoria, index) => (
-            <View style={styles.contato} key={index.toString()}>
-              <Text style={styles.listaCodigo}>{categoria.codigo}</Text>
-              <Text style={styles.listaDescricao}>{categoria.descricao}</Text>
+                <View style={styles.dadosBotoesAcao}>
+                  <TouchableOpacity onPress={() => removerElemento(categoria._id)}>
+                    <EvilIcons name="trash" size={24} color="black" />
+                  </TouchableOpacity>
 
-              <View style={styles.dadosBotoesAcao}>
-                <TouchableOpacity onPress={() => removerElemento(categoria._id)}>
-                  <EvilIcons name="trash" size={24} color="black" />
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={() => editar(categoria._id)}>
+                    <Entypo name="edit" size={32} color="black" />
+                  </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => editar(categoria._id)}>
-                  <Entypo name="edit" size={32} color="black" />
-                </TouchableOpacity>
-
+                </View>
               </View>
-            </View>
 
-          ))
-        }
-      </ScrollView>
-
-
+            ))
+          }
+        </ScrollView>
+      </View>
     </View>
- 
+
 
 
   );

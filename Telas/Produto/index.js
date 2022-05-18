@@ -149,7 +149,7 @@ export default function Produto({ navigation }) {
                 }
             ]);
     }
-
+ 
     function editar(identificador) {
         const produto = produtos.find(produto => produto._id == identificador);
 
@@ -204,7 +204,7 @@ export default function Produto({ navigation }) {
                         {
                             temAbaixoEstoque &&
                             <TouchableOpacity onPress={() => { estoqueBaixo() }}>
-                                <EvilIcons name="bell" size={24} color="black" />
+                                <EvilIcons name="bell" size={24} color="red" />
                             </TouchableOpacity>
                         }
 
@@ -262,13 +262,13 @@ export default function Produto({ navigation }) {
                 </View>
 
                 <View style={styles.filtros}>
-                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { ativos() }}>
+                    <TouchableOpacity style={styles.filtroBotaoAtivo} onPress={() => { ativos() }}>
                         <Text style={styles.textoFiltro}>Ativos</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { inativos() }}>
+                    <TouchableOpacity style={styles.filtroBotaoInativo} onPress={() => { inativos() }}>
                         <Text style={styles.textoFiltro}>Inativos</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.filtroBotao} onPress={() => { getAllProdutos() }}>
+                    <TouchableOpacity style={styles.filtroBotaoTds} onPress={() => { getAllProdutos() }}>
                         <Text style={styles.textoFiltro}>Todos</Text>
                     </TouchableOpacity>
                 </View>

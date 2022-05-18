@@ -6,7 +6,6 @@ const styles =  StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#87CEFA',
-    marginTop: '5%',
   },
   cadastro: {
     flexDirection: 'row',
@@ -24,7 +23,7 @@ const styles =  StyleSheet.create({
     margin: 10,
   },
   scrollView: {    
-    backgroundColor: '#F9F5F5',
+    backgroundColor: '#87CEFA',
     height:'0%',
   },
   botao: {
@@ -56,7 +55,7 @@ const styles =  StyleSheet.create({
     margin: 10,
   },
   inputEstoque: {
-    width: '20%',
+    width: '25%',
     borderColor: '#FF1493',
     color: '#8B008B',
     alignItems: 'center',
@@ -127,17 +126,6 @@ produtoInativo: {
   shadowRadius: 2.22,
   elevation: 3,
 },
-listaDescricao: {
-  width: '40%',
-  fontSize: 18,
-  paddingRight: 10,
-  marginLeft:10,
-},
-listaEstoque: {
-  width: '35%',
-  color: "#FFF",
-  fontSize: 18,
-},
 filtros:{ 
   width: '100%',
   flexDirection: 'row',
@@ -145,22 +133,41 @@ filtros:{
   borderColor: 'red',
   borderStyle: 'solid'
 },
-filtroBotao:{
+filtroBotaoTds:{
   width: 80,
   height: 40,
-  backgroundColor: '#9EC6E6',
+  backgroundColor: '#FFF',
   justifyContent: 'center',
   alignItems: 'center',
-  margin: 10,
+  margin: 5,
   borderRadius: 5,
 },
-filtroBotaoQtde:{
-  width: '70%',
+filtroBotaoAtivo:{
+  width: 80,
   height: 40,
-  backgroundColor: '#9EC6E6',
+  backgroundColor: '#90EE90',
   justifyContent: 'center',
   alignItems: 'center',
-  margin: 10,
+  margin: 5,
+  borderRadius: 5,
+},
+filtroBotaoInativo:{
+  width: 80,
+  height: 40,
+  backgroundColor: '#C4BBBB',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 5,
+  borderRadius: 5,
+},
+
+filtroBotaoQtde:{
+  width: '65%',
+  height: 40,
+  backgroundColor: 'red',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 5,
   borderRadius: 5,
 },
 textoFiltro:{

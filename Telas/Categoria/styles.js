@@ -2,10 +2,19 @@ import { StyleSheet, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1,  
+    backgroundColor: '#87CEFA',    
+  },
+  input:{
+    height:'30%',
+    marginTop:'10%', 
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#87CEFA',
+  },
+  infos:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    height:'70%',
   },
   cadastro: {
     flexDirection: 'row',
@@ -41,11 +50,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-  },
+  }, 
   contato: {
     backgroundColor: '#20B2B2',
     flexDirection: 'row',
-    height: 50,
+    height: 40,
     alignItems: 'center',
     margin: 5,
     borderRadius: 5,
@@ -63,6 +72,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingRight: 10,
     marginLeft: 10,
+   
+  },
+  listaCodigo: {
+    width: '5%',
+    fontSize: 18,
+    marginLeft: 10,
+   
   },
   listaEstoque: {
     width: '35%',
@@ -71,9 +87,9 @@ const styles = StyleSheet.create({
   },
   scrollView: {
 
-    backgroundColor: '#F9F5F5',
+    backgroundColor: '#87CEFA',
     height: '10%',
-    width:'70%'
+    width:'70%',
   },
   dadosBotoesAcao: {
     width: '20%',
